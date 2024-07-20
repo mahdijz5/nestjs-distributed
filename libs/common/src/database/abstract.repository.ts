@@ -7,10 +7,11 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
     protected abstract readonly logger : Logger
     constructor(protected readonly model : Model<TDocument>) {}
 
-    async create(document : Omit<TDocument,"_id">) {
+    async create(document : Omit<TDocument,"_id" | "createdAt">) {
         const createDocument = new this.model({
             ...document,
-            id : new Types.ObjectId()
+            createdAt : new Date(),
+            _id : new Types.ObjectId()
         })
 
         return (await createDocument.save()).toJSON() as unknown as TDocument
@@ -54,4 +55,4 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
     }
     
     
-}
+} 
