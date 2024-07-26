@@ -1,12 +1,18 @@
-import { Injectable } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { CreateReservationDto } from './dto/create-reservation.dto';
 import { UpdateReservationDto } from './dto/update-reservation.dto';
 import { ReservationRepository } from './reservation.repository';
 import { Types } from 'mongoose';
+import { AUTH_SERVICE } from '@app/common';
+import { PaymentService } from 'apps/payment/src/payment.service';
+import { ClientProxy } from '@nestjs/microservices';
 
 @Injectable()
 export class ReservationService {
-  constructor(private readonly reservationRepository: ReservationRepository) {
+  constructor(
+    private readonly reservationRepository: ReservationRepository,
+    @Inject(PaymentService) private readonly paymentClient: ClientProxy,
+  ) {
 
   }
   async create(createReservationDto: CreateReservationDto) {
@@ -24,10 +30,10 @@ export class ReservationService {
   }
 
   async update(id: string, updateReservationDto: UpdateReservationDto) {
-    return await this.reservationRepository.update({_id: new Types.ObjectId(id)},{...updateReservationDto})
+    return await this.reservationRepository.update({ _id: new Types.ObjectId(id) }, { ...updateReservationDto })
   }
 
   async remove(id: string) {
-    return await this.reservationRepository.remove({_id : new Types.ObjectId(id) })
+    return await this.reservationRepository.remove({ _id: new Types.ObjectId(id) })
   }
 }

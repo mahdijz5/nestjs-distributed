@@ -8,7 +8,7 @@ import { LoggerModule } from '@app/common/logger';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { AUTH_SERVICE } from '@app/common';
+import { AUTH_SERVICE, RESERVATION_SERVICE } from '@app/common';
 
 @Module({
   imports: [
@@ -37,6 +37,17 @@ import { AUTH_SERVICE } from '@app/common';
           options: {  
             host:  "127.0.0.1",
             port:  4001,
+          }
+        }),
+        inject : [ConfigService]
+      },
+      { 
+        name: RESERVATION_SERVICE,
+        useFactory: (configService: ConfigService) => ({
+          transport: Transport.TCP,
+          options: {  
+            host:  "127.0.0.1",
+            port:  4002,
           }
         }),
         inject : [ConfigService]
