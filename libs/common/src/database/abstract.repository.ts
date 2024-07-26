@@ -8,6 +8,7 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
     constructor(protected readonly model : Model<TDocument>) {}
 
     async create(document : Omit<TDocument,"_id" | "createdAt">) {
+       try {
         const createDocument = new this.model({
             ...document,
             createdAt : new Date(),
@@ -15,6 +16,10 @@ export abstract class AbstractRepository<TDocument extends AbstractDocument> {
         })
 
         return (await createDocument.save()).toJSON() as unknown as TDocument
+       } catch (error) {
+            console.log(error)
+            throw error
+       }
     }
 
     async findOne(filterQuery : FilterQuery<TDocument>) : Promise<TDocument> {

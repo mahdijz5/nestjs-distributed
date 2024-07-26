@@ -8,7 +8,7 @@ import { LoggerModule } from '@app/common/logger';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
 import { ClientsModule, Transport } from '@nestjs/microservices';
-import { AUTH_SERVICE, RESERVATION_SERVICE } from '@app/common';
+import { AUTH_SERVICE, PAYMENT_SERVICE, RESERVATION_SERVICE } from '@app/common';
 
 @Module({
   imports: [
@@ -33,7 +33,7 @@ import { AUTH_SERVICE, RESERVATION_SERVICE } from '@app/common';
       { 
         name: AUTH_SERVICE,
         useFactory: (configService: ConfigService) => ({
-          transport: Transport.TCP,
+          transport: Transport.TCP, 
           options: {  
             host:  "127.0.0.1",
             port:  4001,
@@ -42,7 +42,7 @@ import { AUTH_SERVICE, RESERVATION_SERVICE } from '@app/common';
         inject : [ConfigService]
       },
       { 
-        name: RESERVATION_SERVICE,
+        name: PAYMENT_SERVICE,
         useFactory: (configService: ConfigService) => ({
           transport: Transport.TCP,
           options: {  
