@@ -1,28 +1,19 @@
 version: '3.8'
 services:
-    reservation:
-        container_name: reservation-svc
-        build:
-            context: .
-            args:
-              - NODE_ENV=prod
-              - APP_NAME=reservation
-            # target: prod
-            # command: pnpm run start:dev
-        
-        restart: unless-stopped
-        ports:
-            -  3000:3000
-        volumes:
-            - .:/app 
-    
-    mongodb:
-        image: mongo:latest
-        container_name: mongodb
-        hostname: mongo
-        ports:
-            - 27017:27017
-        volumes:
-            - ./data/mongo_data:/data/db
-       
- 
+  reservation2:
+    build:
+      context: .
+      dockerfile: Dockerfile
+      target: prod
+    # env_file:
+    #   - ./apps/reservation/.env
+    ports:
+      - '3000:3000'
+    volumes:
+      - .:/usr/src/app
+    # command: npm run start:prod
+
+  mongo:
+    image: mongo
+    ports:
+      - "27017:27017"

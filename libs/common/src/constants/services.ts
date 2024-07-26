@@ -1,0 +1,2 @@
+export const AUTH_SERVICE = "AUTH_SERVice"
+export const RESERVATION_SERVICE = "RESERVATIOn_SERVice"
