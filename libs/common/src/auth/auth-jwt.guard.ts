@@ -10,12 +10,9 @@ export class JwtAuthGaurd implements CanActivate {
 
     canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
         const jwt = context.switchToHttp().getRequest().cookies?.Authentication
-        console.log("sdas23213")
-        console.log(jwt)
         if (!jwt) {
             return false
         }
-        console.log("eh ")
         // lastValueFrom(this.authClient.send(MESSAGE_PATTERN.AUTH.AUTHENTICATE, {
         //     Authentication: jwt
         // })).then(e => console.log(e)).catch(e => console.log(e))

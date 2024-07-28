@@ -22,7 +22,7 @@ import { AUTH_SERVICE, PAYMENT_SERVICE, RESERVATION_SERVICE } from '@app/common'
     LoggerModule,
     ConfigModule.forRoot({
       isGlobal: true,
-      envFilePath: "apps/reservation/.env",
+      // envFilePath: "apps/reservation/.env",
       validationSchema: Joi.object({
         MONGO_URI: Joi.string().required(),
         HTTP_PORT: Joi.number().required(),

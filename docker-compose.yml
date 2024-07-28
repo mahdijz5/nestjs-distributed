@@ -5,6 +5,9 @@ services:
       context: .
       dockerfile: Dockerfile
       target: prod
+      args:
+        - APP_NAME=reservation
+        - NODE_ENV=prod
     # env_file:
     #   - ./apps/reservation/.env
     ports:
