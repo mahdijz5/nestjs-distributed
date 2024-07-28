@@ -18,5 +18,9 @@
     "ts-jest": "^29.2.3",
     "ts-node": "^10.9.2",
     "typescript": "^5.5.4"
+  },
+  "dependencies": {
+    "amqp": "^0.2.7",
+    "amqp-connection-manager": "^4.1.14"
   }
 }
