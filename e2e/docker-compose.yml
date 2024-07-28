@@ -1,0 +1,6 @@
+services:
+  e2e:
+    build:
+      dockerfile : ./Dockerfile
+    volumes:
+      - ./specs:/app/specs
