@@ -17,7 +17,7 @@ export class ReservationController {
   create(@Body() createReservationDto: CreateReservationDto,
     @CurrentUser() userDocument: UserDocument
   ) {
-     return this.reservationService.create(createReservationDto, userDocument);
+    return this.reservationService.create(createReservationDto, userDocument);
   }
 
 

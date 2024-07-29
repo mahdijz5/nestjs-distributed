@@ -13,14 +13,14 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
    constructor(
       private readonly configService: ConfigService,
       private readonly userService: UserService,
-      private readonly jwtService: JwtService,
+      private readonly jwtService: JwtService, 
 
    ) {
       super({
          jwtFromRequest: ExtractJwt.fromExtractors([
             (requset: any) => {
                console.log("adasdsad")
-               const jwt = requset?.cookies?.Authentication || requset?.Authentication
+               const jwt = requset?.cookies?.Authentication || requset?.Authentication || requset?.headers.Authentication
                console.log(jwt)
                return jwt
             }

@@ -9,13 +9,11 @@ export class JwtAuthGaurd implements CanActivate {
     constructor(@Inject(AUTH_SERVICE) private readonly authClient: ClientProxy) { }
 
     canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
-        const jwt = context.switchToHttp().getRequest().cookies?.Authentication
+        const jwt = context.switchToHttp().getRequest().cookies?.Authentication || context.switchToHttp().getRequest().headers?.authentication
         if (!jwt) {
             return false
         }
-        // lastValueFrom(this.authClient.send(MESSAGE_PATTERN.AUTH.AUTHENTICATE, {
-        //     Authentication: jwt
-        // })).then(e => console.log(e)).catch(e => console.log(e))
+       
         return this.authClient.send(MESSAGE_PATTERN.AUTH.AUTHENTICATE, {
             Authentication: jwt
         }).pipe(

@@ -5,6 +5,7 @@ import { PaymentService } from './payment.service';
 import * as Joi from 'joi';
 import { LoggerModule, NOTIFICATION_SERVICE } from '@app/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
+import { RmqModule } from '@app/common/rmq';
 
 @Module({
   imports: [
@@ -18,21 +19,9 @@ import { ClientsModule, Transport } from '@nestjs/microservices';
         STRIPE_PUBLISHABLE_KEY: Joi.string().required(),
         HTTP_PORT: Joi.number().required(),
         TCP_PORT: Joi.number().required(),
-      })
+      }) 
     }),
-    ClientsModule.registerAsync([
-      {
-        name : NOTIFICATION_SERVICE,
-        useFactory: (configService: ConfigService) => ({
-          transport: Transport.TCP,
-          options: {  
-            host:  "127.0.0.1",
-            port:  4004,
-          }
-        }),
-        inject : [ConfigService]
-      }
-    ])
+    RmqModule.register([NOTIFICATION_SERVICE])
   ],
   controllers: [PaymentController],
   providers: [PaymentService],

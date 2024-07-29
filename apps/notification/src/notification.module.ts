@@ -4,6 +4,7 @@ import { NotificationService } from './notification.service';
 import { LoggerModule } from '@app/common';
 import { ConfigModule } from '@nestjs/config';
 import * as Joi from 'joi';
+import { RmqModule } from '@app/common/rmq';
 
 @Module({
   imports: [
@@ -19,6 +20,7 @@ import * as Joi from 'joi';
         TCP_PORT: Joi.number().required(),
       })
     }),
+    RmqModule
   ],
   controllers: [NotificationController],
   providers: [NotificationService],

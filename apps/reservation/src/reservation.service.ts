@@ -21,10 +21,10 @@ export class ReservationService {
         MESSAGE_PATTERN.PAYMENT.CREATE_CHARGE,
         {
           ...createReservationDto.charge,
-          email: user.email
+          email: user.email 
         },
 
-      ).subscribe(async (response) => {
+      ).subscribe(async (response) => { 
         console.log("response")
         console.log(response)
         const reservation = await this.reservationRepository.create({
