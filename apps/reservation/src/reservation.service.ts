@@ -1,17 +1,19 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, OnModuleInit } from '@nestjs/common';
 import { CreateReservationDto } from './dto/create-reservation.dto';
 import { UpdateReservationDto } from './dto/update-reservation.dto';
 import { ReservationRepository } from './reservation.repository';
 import { Types } from 'mongoose';
-import { AUTH_SERVICE, MESSAGE_PATTERN, PAYMENT_SERVICE } from '@app/common';
-import { ClientProxy } from '@nestjs/microservices';
+import { AUTH_SERVICE, MESSAGE_PATTERN, PAYMENT_SERVICE, PAYMENT_SERVICE_NAME, PaymentServiceClient } from '@app/common';
+import { ClientGrpc, ClientProxy } from '@nestjs/microservices';
 import { UserDocument } from 'apps/auth/src/user/models/user.schema';
 
 @Injectable()
-export class ReservationService {
+export class ReservationService implements OnModuleInit{
+  private paymentService : PaymentServiceClient
+
   constructor(
     private readonly reservationRepository: ReservationRepository,
-    @Inject(PAYMENT_SERVICE) private readonly paymentClient: ClientProxy,
+    @Inject(PAYMENT_SERVICE_NAME) private readonly paymentClient: ClientGrpc,
   ) {
 
   }
