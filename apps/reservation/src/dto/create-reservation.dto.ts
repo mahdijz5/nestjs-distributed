@@ -4,23 +4,35 @@ import { CardDto } from "../../../../libs/common/src/dto/card.dto"
 import { ApiProperty } from "@nestjs/swagger"
 import { CreateChargeDto } from "@app/common/dto"
 import { Type } from "class-transformer"
+import { Field, InputType } from "@nestjs/graphql"
 
+
+@InputType()
 export class CreateReservationDto {
+    @Field()
     @ApiCustomeProperty({ example: new Date() + "" })
-
     startDate: Date
+    
+    @Field()
     @ApiCustomeProperty({ example: new Date() + "" })
     endDate: Date
+    
+    @Field()
     @ApiCustomeProperty({ example: "objectId" })
     @IsString()
     userId: string
+    
+    @Field()
     @ApiCustomeProperty({ example: "objectId" })
     @IsString()
     placeId: string
+    
+    @Field()
     @ApiCustomeProperty({ example: "objectId" })
     @IsString()
     invoiceId: string
-
+    
+    @Field(() => CreateChargeDto)
     @ApiProperty({
         example: new CreateChargeDto()
     })

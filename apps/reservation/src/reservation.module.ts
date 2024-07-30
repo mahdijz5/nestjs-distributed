@@ -12,6 +12,7 @@ import { AUTH_SERVICE, PAYMENT_SERVICE, RESERVATION_SERVICE } from '@app/common'
 import { RmqModule } from '@app/common/rmq';
 import { GraphQLModule } from '@nestjs/graphql';
 import { ApolloFederationDriver, ApolloFederationDriverConfig } from '@nestjs/apollo';
+import { ReservationResolver } from './reservation.resolver';
 
 @Module({
   imports: [
@@ -26,7 +27,7 @@ import { ApolloFederationDriver, ApolloFederationDriverConfig } from '@nestjs/ap
     GraphQLModule.forRoot<ApolloFederationDriverConfig>({
       driver: ApolloFederationDriver,
       autoSchemaFile: {
-        federation: 2
+        federation: 2 
       }
     }),
     ConfigModule.forRoot({
@@ -41,6 +42,6 @@ import { ApolloFederationDriver, ApolloFederationDriverConfig } from '@nestjs/ap
     RmqModule.register([AUTH_SERVICE, PAYMENT_SERVICE]),
   ],
   controllers: [ReservationController],
-  providers: [ReservationService, ReservationRepository],
+  providers: [ReservationService, ReservationRepository,ReservationResolver],
 })
 export class ReservationModule { }

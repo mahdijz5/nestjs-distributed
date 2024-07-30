@@ -22,4 +22,15 @@ export class ReservationResolver {
     async findAll() {
         return this.reservationService.findAll()
     }
+
+    @Query(() => ReservationDocument,{ name : "reservation"})
+    async findOne(@Args("id",{type : () => String}) id : string) {
+        return this.reservationService.findOne(id)
+    }
+
+    @Mutation(() => ReservationDocument)
+    remove(@Args("id",{type : () => String}) id : string){
+        return this.reservationService.remove(id)
+    }
+
 }
