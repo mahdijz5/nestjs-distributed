@@ -8,7 +8,7 @@ export class JwtAuthGaurd implements CanActivate, OnModuleInit {
     private readonly logger = new Logger(JwtAuthGaurd.name)
     private authservice: AuthServiceClient
 
-    constructor(@Inject(AUTH_PACKAGE_NAME) private readonly authClient: ClientGrpc) { }
+    constructor(@Inject(AUTH_SERVICE_NAME) private readonly authClient: ClientGrpc) { }
 
     onModuleInit() {
         this.authservice = this.authClient.getService<AuthServiceClient>(AUTH_SERVICE_NAME)

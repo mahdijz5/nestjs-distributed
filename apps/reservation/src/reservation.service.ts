@@ -8,8 +8,8 @@ import { ClientGrpc, ClientProxy } from '@nestjs/microservices';
 import { UserDocument } from 'apps/auth/src/user/models/user.schema';
 
 @Injectable()
-export class ReservationService implements OnModuleInit{
-  private paymentService : PaymentServiceClient
+export class ReservationService implements OnModuleInit {
+  private paymentService: PaymentServiceClient
 
   constructor(
     private readonly reservationRepository: ReservationRepository,
@@ -17,16 +17,20 @@ export class ReservationService implements OnModuleInit{
   ) {
 
   }
+
+  onModuleInit() {
+    this.paymentService = this.paymentClient.getService<PaymentServiceClient>(PAYMENT_SERVICE_NAME)
+  }
+
   async create(createReservationDto: CreateReservationDto, user: UserDocument) {
     try {
-      this.paymentClient.send(
-        MESSAGE_PATTERN.PAYMENT.CREATE_CHARGE,
+      this.paymentService.createCharge(
         {
           ...createReservationDto.charge,
-          email: user.email 
+          email: user.email
         },
 
-      ).subscribe(async (response) => { 
+      ).subscribe(async (response) => {
         console.log("response")
         console.log(response)
         const reservation = await this.reservationRepository.create({

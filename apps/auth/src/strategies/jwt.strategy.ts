@@ -20,7 +20,7 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
          jwtFromRequest: ExtractJwt.fromExtractors([
             (requset: any) => {
                console.log("adasdsad")
-               const jwt = requset?.cookies?.Authentication || requset?.Authentication || requset?.headers.Authentication
+               const jwt = requset?.cookies?.Authentication || requset?.Authentication || requset?.headers?.Authentication
                console.log(jwt)
                return jwt
             }

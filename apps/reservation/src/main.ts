@@ -12,13 +12,10 @@ import { RESERVATION_SERVICE } from '@app/common';
 async function bootstrap() {
   const app = await NestFactory.create(ReservationModule, {})
   const configService = app.get(ConfigService)
-  const rmqService = app.get<RmqService>(RmqService)
-  app.connectMicroservice(rmqService.getOptions(RESERVATION_SERVICE))
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }))
   app.useLogger(app.get(Logger))
   app.setGlobalPrefix(await configService.get("API_PATH"));
   setupDocument(app, await configService.get("DOC_PATH"));
-  app.startAllMicroservices()
   app.use(cookieParser())
   await app.listen(await configService.get("HTTP_PORT"));
 

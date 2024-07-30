@@ -7,13 +7,21 @@ import { setupDocument } from '@app/common/utils';
 import * as cookieParser from 'cookie-parser';
 import { Transport } from '@nestjs/microservices';
 import { RmqService } from '@app/common/rmq';
-import { AUTH_SERVICE } from '@app/common';
+import { AUTH_PACKAGE_NAME, AUTH_SERVICE, AUTH_SERVICE_NAME } from '@app/common';
+import { join } from 'path';
 
 async function bootstrap() {
   const app = await NestFactory.create(AuthModule, {});
   const configService = (app.get(ConfigService))
-  const rmqService = app.get(RmqService)
-  app.connectMicroservice(rmqService.getOptions(AUTH_SERVICE))
+   app.connectMicroservice({
+    name: AUTH_SERVICE_NAME,
+    transport: Transport.GRPC,
+    options: {
+      package: AUTH_PACKAGE_NAME,
+      protoPath: join(__dirname, '../../../proto/auth.proto'),
+      url: configService.getOrThrow('AUTH_GRPC_URL'),
+    },
+  });
   app.use(cookieParser())
   app.useGlobalPipes(new ValidationPipe({ whitelist: true }))
   app.useLogger(app.get(Logger))

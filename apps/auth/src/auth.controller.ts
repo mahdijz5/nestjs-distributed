@@ -7,13 +7,14 @@ import { Response } from 'express';
 import { CreateUserReqDto } from './user/dto/create-user.dto';
 import { LocalStrategy } from './strategies/local.strategy';
 import { LocalAuthGuard } from './guards/local-auth.guard';
-import { MessagePattern } from '@nestjs/microservices';
-import { MESSAGE_PATTERN } from '@app/common';
+import { MessagePattern, Payload } from '@nestjs/microservices';
+import { AuthServiceController, AuthServiceControllerMethods, MESSAGE_PATTERN } from '@app/common';
 import { JwtAuthGaurd } from './guards/jwt-auth.guard';
 
 @ApiTags("Auth")
+@AuthServiceControllerMethods()
 @Controller({ path: "auth", version: "1" })
-export class AuthController {
+export class AuthController  implements AuthServiceController {
   constructor(private readonly authService: AuthService) { }
 
   @UseGuards(LocalAuthGuard)
@@ -25,8 +26,11 @@ export class AuthController {
 
   @UseGuards(JwtAuthGaurd)
   @MessagePattern(MESSAGE_PATTERN.AUTH.AUTHENTICATE)
-  async authenticate(@CurrentUser() user: UserDocument) {
-    return user
+  async authenticate(@Payload() data :any) {
+    return {
+      ...data.user,
+      id : data.user.id
+    }
   }
 
 }

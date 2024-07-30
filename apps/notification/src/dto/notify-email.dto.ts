@@ -5,4 +5,8 @@ export class NotifyEmailDto {
     @ApiCustomeProperty({example :"test"})
     @IsEmail()
     email : string
+
+    @ApiCustomeProperty({example :"test"})
+    @IsEmail()
+    text : string
 }

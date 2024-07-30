@@ -3,7 +3,7 @@ import { PaymentController } from './payment.controller';
 import { PaymentService } from './payment.service';
  import { ConfigModule, ConfigService } from '@nestjs/config';
 import * as Joi from 'joi';
-import { LoggerModule, NOTIFICATION_PACKAGE_NAME, NOTIFICATION_SERVICE } from '@app/common';
+import { LoggerModule, NOTIFICATION_PACKAGE_NAME, NOTIFICATION_SERVICE, NOTIFICATION_SERVICE_NAME } from '@app/common';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { RmqModule } from '@app/common/rmq';
 import { join } from 'path';
@@ -24,7 +24,7 @@ import { join } from 'path';
     }),
     ClientsModule.registerAsync([
       {
-          name : NOTIFICATION_SERVICE,
+          name : NOTIFICATION_SERVICE_NAME,
           useFactory: (configService: ConfigService) => ({
               transport: Transport.GRPC,
               options: {
@@ -34,7 +34,7 @@ import { join } from 'path';
               },
           }),
           inject: [ConfigService],
-      },
+      }, 
     
   ]),
   ],
