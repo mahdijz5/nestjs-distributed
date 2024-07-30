@@ -10,6 +10,8 @@ import * as Joi from 'joi';
 import { ClientsModule, Transport } from '@nestjs/microservices';
 import { AUTH_SERVICE, PAYMENT_SERVICE, RESERVATION_SERVICE } from '@app/common';
 import { RmqModule } from '@app/common/rmq';
+import { GraphQLModule } from '@nestjs/graphql';
+import { ApolloFederationDriver, ApolloFederationDriverConfig } from '@nestjs/apollo';
 
 @Module({
   imports: [
@@ -21,6 +23,12 @@ import { RmqModule } from '@app/common/rmq';
       }
     ]),
     LoggerModule,
+    GraphQLModule.forRoot<ApolloFederationDriverConfig>({
+      driver: ApolloFederationDriver,
+      autoSchemaFile: {
+        federation: 2
+      }
+    }),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: "apps/reservation/.env",
