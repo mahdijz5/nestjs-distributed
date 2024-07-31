@@ -10,11 +10,11 @@ import { Field, InputType } from "@nestjs/graphql"
 @InputType()
 export class CreateReservationDto {
     @Field()
-    @ApiCustomeProperty({ example: new Date() + "" })
+    @IsDate()
     startDate: Date
     
     @Field()
-    @ApiCustomeProperty({ example: new Date() + "" })
+    @IsDate()
     endDate: Date
     
     @Field()

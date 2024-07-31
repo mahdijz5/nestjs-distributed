@@ -13,11 +13,12 @@ export class JwtAuthGaurd implements CanActivate {
         if (!jwt) {
             return false
         }
-       
-        return this.authClient.send(MESSAGE_PATTERN.AUTH.AUTHENTICATE, {
+        
+          return this.authClient.send(MESSAGE_PATTERN.AUTH.AUTHENTICATE, {
             Authentication: jwt
         }).pipe(
             tap((res) => {
+             
                 context.switchToHttp().getRequest().user = res
 
             }),

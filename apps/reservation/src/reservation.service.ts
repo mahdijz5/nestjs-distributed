@@ -6,6 +6,7 @@ import { Types } from 'mongoose';
 import { AUTH_SERVICE, MESSAGE_PATTERN, PAYMENT_SERVICE } from '@app/common';
 import { ClientProxy } from '@nestjs/microservices';
 import { UserDocument } from 'apps/auth/src/user/models/user.schema';
+import { lastValueFrom } from 'rxjs';
 
 @Injectable()
 export class ReservationService {
@@ -17,22 +18,23 @@ export class ReservationService {
   }
   async create(createReservationDto: CreateReservationDto, user: UserDocument) {
     try {
-      this.paymentClient.send(
+      console.log(user)
+
+      await lastValueFrom(this.paymentClient.send(
         MESSAGE_PATTERN.PAYMENT.CREATE_CHARGE,
         {
           ...createReservationDto.charge,
-          email: user.email 
+          email: user.email
         },
 
-      ).subscribe(async (response) => { 
-        console.log("response") 
-        console.log(response)
-        const reservation = await this.reservationRepository.create({
-          ...createReservationDto,
-        })
+      ))
+
+ 
+      return await this.reservationRepository.create({
+        ...createReservationDto,
       })
-      return {}
     } catch (error) {
+      console.log(error)
       return {}
     }
 

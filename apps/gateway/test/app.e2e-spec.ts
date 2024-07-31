@@ -6,7 +6,7 @@ import { GatewayModule } from './../src/gateway.module';
 describe('GatewayController (e2e)', () => {
   let app: INestApplication;
 
-  beforeEach(async () => {
+  beforeEach(async () => { 
     const moduleFixture: TestingModule = await Test.createTestingModule({
       imports: [GatewayModule],
     }).compile();

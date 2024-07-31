@@ -26,6 +26,8 @@ export class AuthController {
   @UseGuards(JwtAuthGaurd)
   @MessagePattern(MESSAGE_PATTERN.AUTH.AUTHENTICATE)
   async authenticate(@CurrentUser() user: UserDocument) {
+   
+ 
     return user
   }
 

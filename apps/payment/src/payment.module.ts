@@ -18,8 +18,7 @@ import { RmqModule } from '@app/common/rmq';
         STRIPE_SECRET_KEY: Joi.string().required(),
         STRIPE_PUBLISHABLE_KEY: Joi.string().required(),
         HTTP_PORT: Joi.number().required(),
-        TCP_PORT: Joi.number().required(),
-      }) 
+       }) 
     }),
     RmqModule.register([NOTIFICATION_SERVICE])
   ],
