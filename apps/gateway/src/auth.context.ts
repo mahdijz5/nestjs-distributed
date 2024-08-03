@@ -7,6 +7,7 @@ import { AUTH_PATTERN } from "@app/common/enum/pattern/auth.enum"
 
 export const authContext = async ({ req }) => {
     try {
+        return {}
         const authClient = app.get<ClientProxy>(AUTH_SERVICE)
         const user = await lastValueFrom(authClient.send(AUTH_PATTERN.AUTHENTICATE, {
             Authentication: req?.headers?.authentication

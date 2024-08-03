@@ -34,6 +34,6 @@ export class UserService {
     }
 
     async getUser( getUserDto : GetUserDto) {
-        return await this.userRepository.findOne(getUserDto)
+         return await this.userRepository.findOne(getUserDto)
     }
 }

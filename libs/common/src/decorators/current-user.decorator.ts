@@ -1,7 +1,7 @@
 import { createParamDecorator, ExecutionContext } from "@nestjs/common";
-import { UserDocument } from "apps/auth/src/user/models/user.schema";
+import { User } from "apps/auth/src/user/models/user.schema";
 
-const getCurrentUserByContext = (context: ExecutionContext): UserDocument => {
+const getCurrentUserByContext = (context: ExecutionContext): User => {
  
     
     switch (context.getType<any>()) {

@@ -6,4 +6,4 @@ export class GatewayService {
     return 'Hello World!';
   }
 }
-  
+        

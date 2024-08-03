@@ -5,7 +5,7 @@ import { ReservationRepository } from './reservation.repository';
 import { Types } from 'mongoose';
 import { AUTH_SERVICE, MESSAGE_PATTERN, PAYMENT_SERVICE } from '@app/common';
 import { ClientProxy } from '@nestjs/microservices';
-import { UserDocument } from 'apps/auth/src/user/models/user.schema';
+import { User } from 'apps/auth/src/user/models/user.schema';
 import { lastValueFrom } from 'rxjs';
 
 @Injectable()
@@ -16,7 +16,7 @@ export class ReservationService {
   ) {
 
   }
-  async create(createReservationDto: CreateReservationDto, user: UserDocument) {
+  async create(createReservationDto: CreateReservationDto, user: User) {
     try {
       console.log(user)
 
@@ -32,6 +32,7 @@ export class ReservationService {
  
       return await this.reservationRepository.create({
         ...createReservationDto,
+        userId : user._id.toString()
       })
     } catch (error) {
       console.log(error)
@@ -42,11 +43,14 @@ export class ReservationService {
   }
 
   async findAll() {
-    return `This action returns all reservation`;
+    return  (await this.reservationRepository.findAll({})).map((item :any) =>   {
+      return {...item  } 
+    } )
+ 
   }
 
   async findOne(id: string) {
-    return await this.reservationRepository.findOne({ _id: new Types.ObjectId(id) })
+    return (await this.reservationRepository.findOne({ _id: new Types.ObjectId(id) })) 
   }
 
   async update(id: string, updateReservationDto: UpdateReservationDto) {

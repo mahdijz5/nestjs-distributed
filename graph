@@ -1,0 +1,27 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type User {
+  createdAt: DateTime!
+  email: String!
+  password: String!
+}
+
+"""
+A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date-time format.
+"""
+scalar DateTime
+
+type Query {
+  user(id: String!): User!
+}
+
+type Mutation {
+  createUser(createUser: CreateUserReqDto!): User!
+}
+
+input CreateUserReqDto {
+  email: String!
+  password: String!
+}

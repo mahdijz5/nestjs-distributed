@@ -19,20 +19,25 @@ import { authContext } from './auth.context';
         PORT: Joi.number().required(),
         RESERVATION_GRAPHQL_URL: Joi.string().required(),
       })
-    }),
+    }),    
     GraphQLModule.forRootAsync<ApolloGatewayDriverConfig>({
       driver: ApolloGatewayDriver,
-      useFactory: (configService: ConfigService) => ({
-        server : {
-          context : authContext
+      useFactory: (configService: ConfigService) => ({   
+        server : {  
+          context : authContext  
         },
-        gateway: {
-          supergraphSdl: new IntrospectAndCompose({
+        gateway: {  
+          
+           supergraphSdl: new IntrospectAndCompose({
             subgraphs: [
               {
                 name: "reservation",
                 url: configService.getOrThrow("RESERVATION_GRAPHQL_URL")
-              }
+              },  
+              {
+                name: "auth",  
+                url: configService.getOrThrow("AUTH_GRAPHQL_URL")
+              },
             ]
           }),
           buildService({url}) {

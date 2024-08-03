@@ -5,7 +5,7 @@ import { UpdateReservationDto } from './dto/update-reservation.dto';
 import { ApiOkResponse } from '@nestjs/swagger';
 import { JwtAuthGaurd } from '@app/common';
 import { CurrentUser } from '@app/common/decorators/current-user.decorator';
-import { UserDocument } from 'apps/auth/src/user/models/user.schema';
+import { User } from 'apps/auth/src/user/models/user.schema';
 
 @Controller('reservation')
 export class ReservationController {
@@ -15,9 +15,9 @@ export class ReservationController {
   @UseGuards(JwtAuthGaurd)
   @Post()
   create(@Body() createReservationDto: CreateReservationDto,
-    @CurrentUser() userDocument: UserDocument
+    @CurrentUser() User: User
   ) {
-    return this.reservationService.create(createReservationDto, userDocument);
+    return this.reservationService.create(createReservationDto, User);
   }
 
 

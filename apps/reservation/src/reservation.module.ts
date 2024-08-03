@@ -28,7 +28,7 @@ import { ReservationResolver } from './reservation.resolver';
       driver: ApolloFederationDriver,
       autoSchemaFile: {
         federation: 2 
-      }
+      },
     }),
     ConfigModule.forRoot({
       isGlobal: true,
